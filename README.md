@@ -8,35 +8,34 @@ import axios from "axios"
 import https from "https"
 
 //解决证书没有效的问题<br>
-const instance = axios.create({
-    httpsAgent: new https.Agent({  
-      rejectUnauthorized: false
-    })
-});
+const instance = axios.create({  <br>
+    httpsAgent: new https.Agent({  <br>
+      rejectUnauthorized: false  <br>
+    })  <br>
+}); <br>
 ## 然后用示例来代替axios发送请求<br>
-// 2. Create an express app and set the port number.
-let app = express()
-let port = 4000
-// 3. Use the public folder for static files.
-app.use(express.static('public'))
-// 4. When the user goes to the home page it should render the index.ejs file.
-// 5. Use axios to get a random secret and pass it to index.ejs to display the
-// secret and the username of the secret.
-app.get("/",async (req,res)=>{
-    try {
-        const result = await instance.get("https://secrets-api.appbrewery.com/random");
-        res.render("index.ejs", {
-          secret: result.data.secret,
-          user: result.data.username,
-        });
-      } catch (error) {
-        console.log(error); //error.response.data这里会报错,是get请求方法的问题
-        res.status(500);
+// 2. Create an express app and set the port number. <br>
+let app = express() <br>
+let port = 4000 <br>
+// 3. Use the public folder for static files. <br>
+app.use(express.static('public')) <br>
+// 4. When the user goes to the home page it should render the index.ejs file. <br>
+// 5. Use axios to get a random secret and pass it to index.ejs to display the <br>
+// secret and the username of the secret. <br>
+app.get("/",async (req,res)=>{ <br>
+    try { <br>
+        const result = await instance.get("https://secrets-api.appbrewery.com/random"); <br>
+        res.render("index.ejs", { <br>
+          secret: result.data.secret, <br>
+          user: result.data.username, <br>
+        });<br>
+      } catch (error) { <br>
+        console.log(error); //error.response.data这里会报错,是get请求方法的问题 <br>
+        res.status(500); <br>
       }
 })
 
-// 6. Listen on your predefined port and start the server.
-app.listen(port,()=>{
-    console.log(`server ready: http://localhost:${port}/`);
-    
-})
+// 6. Listen on your predefined port and start the server. <br>
+app.listen(port,()=>{ <br>
+    console.log(`server ready: http://localhost:${port}/`); <br>
+}) <br>
